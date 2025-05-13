@@ -5,7 +5,7 @@ class Product(models.Model):
     description = models.TextField(max_length=500, blank=True, null=True)
     price = models.PositiveIntegerField(null=True)
     active = models.BooleanField(default=True)
-    categories = models.ManyToManyField('Category', related_name='products', blank=True)    
+    categories = models.ManyToManyField('Category', related_name='product', blank=True)    
 
     def __str__(self):
         return self.title
