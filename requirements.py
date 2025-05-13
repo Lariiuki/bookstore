@@ -1,0 +1,12 @@
+asgiref=3.8
+Django=5.2
+django-rest-framework=0.1
+djangorestframework=3.16
+factory-boy=2.12
+Faker=37.1
+iniconfig=2.1
+packaging=25.0
+pluggy=1.5
+pytest=8.3
+sqlparse=0.5
+tzdata=2025.2
