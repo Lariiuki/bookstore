@@ -1,8 +1,6 @@
 import factory
 
-from django.contrib.auth.models import User
 from product.models import Product, Category
-from order.models import Order
 
 class CategoryFactory(factory.django.DjangoModelFactory):
     title = factory.Faker('pystr')
@@ -11,7 +9,7 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     active = factory.Faker('boolean')
 
     class Meta:
-        model = User
+        model = Category
 
 class ProductFactory(factory.django.DjangoModelFactory):
     price = factory.Faker('pyint')
@@ -27,4 +25,4 @@ class ProductFactory(factory.django.DjangoModelFactory):
                 self.category.add(category)
 
     class Meta:
-        model = Order
+        model = Product
