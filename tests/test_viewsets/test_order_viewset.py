@@ -28,21 +28,21 @@ class TestOrderViewSet(APITestCase):
 
         order_data = json.loads(response.content)[0]
         self.assertEqual(order_data['product'][0]['title'], self.product.title)
-        self.assertEqual(order_data['product'][0]['price'], str(self.product.price))
+        self.assertEqual(order_data['product'][0]['price'], self.product.price)
         self.assertEqual(order_data['product'][0]['category'][0]['title'], self.category.title)
 
     def test_create_order(self):
         user = UserFactory()
         product = ProductFactory()
-        data = json.dumps({
+        data = {
             'user': user.id,
             'product_id': [product.id]
-        })
+        }
 
         response = self.client.post(
             reverse('order-list', kwargs={'version': 'v1'}),
             data=data,
-            format='application/json'
+            format='json'
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

@@ -20,6 +20,6 @@ from django.urls import path, re_path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    re_path(r"^api/products/", include("product.urls")),
-    re_path(r"^api/orders/", include("order.urls")),
+    re_path(r"^api/(?P<version>v[0-9]+)/products/", include("product.urls")),
+    re_path(r"^api/(?P<version>v[0-9]+)/", include("order.urls")),
 ]
