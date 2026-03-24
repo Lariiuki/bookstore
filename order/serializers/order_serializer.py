@@ -1,9 +1,12 @@
 from rest_framework import serializers
+from order.models.order import Order
 from product.models import Product
 from product.serializers.product_serializer import ProductSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True, many=True)
+    product_id = serializers.PrimaryKeyRelatedField(
+        source='product', queryset=Product.objects.all(), write_only=True, many=True)
     total = serializers.SerializerMethodField()
 
     def get_total(self, instance):
@@ -11,5 +14,6 @@ class OrderSerializer(serializers.ModelSerializer):
         return total
 
     class Meta:
-        model = Product
-        fields = ['product', 'total']
+        model = Order
+        fields = ['product', 'total', 'user', 'product_id']
+        extra_kwargs = {'product': {'required': False}}

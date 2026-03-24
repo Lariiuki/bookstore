@@ -1,8 +1,6 @@
 import factory
 
-from django.contrib.auth.models import User
 from product.models import Product, Category
-from order.models import Order
 
 class CategoryFactory(factory.django.DjangoModelFactory):
     title = factory.Faker('pystr')
@@ -11,11 +9,10 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     active = factory.Faker('boolean')
 
     class Meta:
-        model = User
+        model = Category
 
 class ProductFactory(factory.django.DjangoModelFactory):
     price = factory.Faker('pyint')
-    category = factory.LazyAttribute(CategoryFactory)
     title = factory.Faker('pystr')
 
     @factory.post_generation
@@ -24,7 +21,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
             return
         if extracted:
             for category in extracted:
-                self.category.add(category)
+                self.categories.add(category)
 
     class Meta:
-        model = Order
+        model = Product

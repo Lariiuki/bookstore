@@ -1,5 +1,6 @@
 asgiref=3.8
 Django=5.2
+django-extensions=4.1
 django-rest-framework=0.1
 djangorestframework=3.16
 factory-boy=2.12
@@ -8,5 +9,6 @@ iniconfig=2.1
 packaging=25.0
 pluggy=1.5
 pytest=8.3
+pytest-django=4.12
 sqlparse=0.5
 tzdata=2025.2
