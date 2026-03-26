@@ -16,10 +16,26 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import path, re_path, include
+import debug_toolbar
+
+def api_root(request, version):
+    return JsonResponse(
+        {
+            "version": version,
+            "endpoints": {
+                "products": f"/bookstore/{version}/products/",
+                "categories": f"/bookstore/{version}/categories/",
+                "orders": f"/bookstore/{version}/orders/",
+            },
+        }
+    )
 
 urlpatterns = [
+    path("__debug__/", include(debug_toolbar.urls)),
     path("admin/", admin.site.urls),
+    re_path(r"bookstore/(?P<version>v1)/?$", api_root, name="api-root"),
     re_path(r"bookstore/(?P<version>v1)/", include("product.urls")),
     re_path(r"bookstore/(?P<version>v1)/", include("order.urls")),
 ]
