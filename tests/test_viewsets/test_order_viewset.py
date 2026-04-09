@@ -15,6 +15,8 @@ class TestOrderViewSet(APITestCase):
     client = APIClient()
 
     def setUp(self):
+        self.user = UserFactory()
+        self.client.force_authenticate(user=self.user)
         self.category = CategoryFactory(title='technolgy')
         self.product = ProductFactory(title='mouse', price=100, category=[self.category])
         self.order = OrderFactory(product=[self.product])
@@ -26,7 +28,7 @@ class TestOrderViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        order_data = json.loads(response.content)[0]
+        order_data = json.loads(response.content)['results'][0]
         self.assertEqual(order_data['product'][0]['title'], self.product.title)
         self.assertEqual(order_data['product'][0]['price'], self.product.price)
         self.assertEqual(order_data['product'][0]['category'][0]['title'], self.category.title)
