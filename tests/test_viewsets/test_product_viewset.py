@@ -1,24 +1,28 @@
 import json
+
+from django.urls import reverse
+
 from product.factories import ProductFactory, CategoryFactory
-from order.factories import UserFactory
 from product.models import Product
 
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
-from django.urls import reverse
-
 class TestProductViewSet(APITestCase):
     client = APIClient()
 
     def setUp(self):
-        self.user = UserFactory()
-        self.client.force_authenticate(user=self.user)
-
         self.product = ProductFactory(
             title = 'pro controller',
             price = 200.00
         )
+
+    def test_get_all_products_without_authentication(self):
+        response = self.client.get(
+            reverse('product-list', kwargs={'version': 'v1'})
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_all_products(self):
         response = self.client.get(
